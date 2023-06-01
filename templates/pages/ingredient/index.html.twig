@@ -5,6 +5,13 @@
 {% block body %}
     <div class="container mt-4">
         <h1>Mes ingrédients</h1>
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }} alert-dismissible fade show mb-4" role="alert">
+                    {{ message|raw }}
+                </div>
+            {% endfor %}
+        {% endfor %}
         <div class="count mt-4">
             {% if ingredients %}
                 Il y a
