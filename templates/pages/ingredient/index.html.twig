@@ -5,9 +5,12 @@
 {% block body %}
     <div class="container mt-4">
         <h1>Mes ingrédients</h1>
+            <a href="{{ path('ingredient_new') }}" class="btn btn-primary">
+                Créer un ingrédient
+            </a>
         {% for label, messages in app.flashes %}
             {% for message in messages %}
-                <div class="alert alert-{{ label }} alert-dismissible fade show mb-4" role="alert">
+                <div class="alert alert-{{ label }} alert-dismissible fade show mb-4 mt-4" role="alert">
                     {{ message|raw }}
                 </div>
             {% endfor %}
