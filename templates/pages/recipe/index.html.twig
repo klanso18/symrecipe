@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}SymRecipe - Mes ingrédients{% endblock %}
+{% block title %}SymRecipe - Mes recettes{% endblock %}
 
 {% block body %}
     <div class="container mt-4">
-        <h1>Mes ingrédients</h1>
-        <a href="{{ path('ingredient_new') }}" class="btn btn-primary">
-            Créer un ingrédient
+        <h1>Mes recettes</h1>
+        <a href="{{ path('recipe_new') }}" class="btn btn-primary">
+            Créer une recette
         </a>
         {% for label, messages in app.flashes %}
             {% for message in messages %}
@@ -16,45 +16,47 @@
             {% endfor %}
         {% endfor %}
         <div class="count mt-4">
-            {% if ingredients %}
+            {% if recipes %}
                 Il y a
-                {{ ingredients.getTotalItemCount }}
-                ingrédients au total.
+                {{ recipes.getTotalItemCount }}
+                recettes au total.
                 {% else %}
-                Il n y a pas d'ingrédients.
+                Il n y a pas de recettes.
             {% endif %}
         </div>
-        {% if ingredients %}
+        {% if recipes %}
             <table class="table table-hover">
                 <thead>
                     <tr>
                         <th scope="col">Numéro</th>
                         <th scope="col">Nom</th>
                         <th scope="col">Prix</th>
+                        <th scope="col">Difficulté</th>
                         <th scope="col">Date de création</th>
                         <th scope="col">Edition</th>
                         <th scope="col">Suppression</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for ingredient in ingredients %}
+                    {% for recipe in recipes %}
                         <tr class="table-primary">
-                            <th scope="row">{{ ingredient.id }}</th>
-                            <td>{{ ingredient.name }}</td>
-                            <td>{{ ingredient.price }}</td>
-                            <td>{{ ingredient.createdAt|date('d/m/Y') }}</td>
+                            <th scope="row">{{ recipe.id }}</th>
+                            <td>{{ recipe.name }}</td>
+                            <td>{{ (recipe.price is null) ? 'Non renseigné' : recipe.price }}</td>
+                            <td>{{ (recipe.difficulty is null) ? 'Non renseigné' : recipe.difficulty }}</td>
+                            <td>{{ recipe.createdAt|date('d/m/Y') }}</td>
                             <td>
-                                <a href="{{ path('ingredient_edit', { id: ingredient.id }) }}" class="btn btn-info">Modifier</a>
+                                <a href="{{ path('recipe_edit', { id: recipe.id }) }}" class="btn btn-info">Modifier</a>
                             </td>
                             <td>
-                                <a href="{{ path('ingredient_delete', { id: ingredient.id }) }}" class="btn btn-warning">Supprimer</a>
+                                <a href="{{ path('recipe_delete', { id: recipe.id }) }}" class="btn btn-warning">Supprimer</a>
                             </td>
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
             <div class="navigation d-flex justify-content-center mt-4">
-                {{ knp_pagination_render(ingredients) }}
+                {{ knp_pagination_render(recipes) }}
             </div>
         {% endif %}
     </div>
